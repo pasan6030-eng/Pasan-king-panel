@@ -1,7 +1,8 @@
 {
   "name": "pasan-king-panel",
-  "version": "1.0.0",
+  "engines": { "node": "18.x" },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.8"
+    "@whiskeysockets/baileys": "6.7.8",
+    "pino": "8.17.2"
   }
 }
