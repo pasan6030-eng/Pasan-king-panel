@@ -5,22 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PASAN KING STORE</title>
 <style>
-body{background:#0f0f0f;color:white;font-family:sans-serif;text-align:center;padding:20px}
-.box{background:#1e1e1e;padding:20px;border-radius:15px;max-width:400px;margin:auto;border:1px solid #333}
-input{width:90%;padding:12px;margin:10px 0;border-radius:8px;border:none;background:#2a2a2a;color:white}
-button{background:#ffcc00;color:black;padding:12px 20px;border:none;border-radius:8px;font-weight:bold;width:95%;margin-top:15px}
+body{background:#0f0f0f;color:white;font-family:Arial;text-align:center;padding:20px}
+.box{background:#1e1e1e;padding:20px;border-radius:15px;max-width:400px;margin:auto}
+input{width:90%;padding:12px;margin:10px 0;border-radius:8px;border:none}
+button{background:#ffcc00;color:black;padding:12px 25px;border:none;border-radius:8px;font-weight:bold;width:90%;cursor:pointer}
 h1{color:#ffcc00}
+#code{font-size:28px;color:#00ff00;margin-top:20px;font-weight:bold;letter-spacing:3px}
 </style>
 </head>
 <body>
 <h1>👑 PASAN KING STORE</h1>
 <p>WhatsApp Bot Hosting Panel</p>
 <div class="box">
-<input type="text" placeholder="Owner Number (947...)" id="owner">
-<input type="text" placeholder="Bot Name - PASAN KING" value="PASAN KING">
-<input type="text" placeholder="Location - Sri Lanka" value="Sri Lanka">
-<button onclick="alert('Panel Ready! Next step: Deploy on Vercel')">GET PAIR CODE</button>
-<p style="font-size:12px;color:#888;margin-top:15px">Made by Pasan King • 2026</p>
+<input id="num" type="text" placeholder="Owner Number - 947XXXXXXXX">
+<input type="text" placeholder="Bot Name - PASAN KING">
+<input type="text" placeholder="Location - Sri Lanka">
+<button onclick="getCode()">GET PAIR CODE</button>
+<div id="code"></div>
+<p style="font-size:12px;color:#888;margin-top:15px">Code එක WhatsApp > Linked Devices > Link with phone number දාලා ගහන්න</p>
 </div>
+<script>
+async function getCode(){
+ let n=document.getElementById('num').value.replace(/[^0-9]/g,'');
+ if(n.length<11){alert('Number එක හරියට දාන්න 947XXXXXXXX');return;}
+ document.getElementById('code').innerHTML='Loading... ⏳';
+ try{
+   let res=await fetch('/api/pair?number='+n);
+   let data=await res.json();
+   if(data.code){document.getElementById('code').innerHTML='YOUR CODE:<br>'+data.code;}
+   else{document.getElementById('code').innerHTML='Error: '+(data.error||'Failed');}
+ }catch(e){document.getElementById('code').innerHTML='Server Error - Vercel Deploying... Wait 2 min';}
+}
+</script>
 </body>
 </html>
